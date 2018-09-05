@@ -1,0 +1,7 @@
+<nav class="navbar navbar-expand-lg">
+	<img src="bootstrap/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+	<?php foreach($total_count_elements_in_categories as $name_category => $total_count) : ?>
+		<a href="?category=<?=$name_category?>" class="nav-link"><?=$name_category ?> <span class="badge badge-secondary"> <?=$total_count ?> </span></a>
+	<?php endforeach; ?>
+</nav>
+<!--<span class="badge badge-primary badge-pill"></span>-->

@@ -1,0 +1,19 @@
+<!-- шаблон нравится внешне, но! Заметил, что при нажатии мышью в любом месте происходит подсвечивание элемента, которое как-то раздражает и портит внешний вид. Возможно. что поменяю всё-таки стиль на card, либо вообще что-то своё набросаю. -->
+<!-- весь код обёрнут в тэг form. Это не так сложно, но несколько нарушает логичное чтение исходного кода. Возможно, поэтому в будущем стоит изменить способ передачи данных от пользователя. Какой-нибудь аякс, или что там у меня получится? -->
+<form action="" method="post">
+<div class="list-group">
+	<?php foreach ($visible_elements as $link => $rss_element) : ?>
+	<li class="list-group-item list-group-item-action flex-column align-items-start">
+		<div class="d-flex w-100 justify-content-between">
+			<h5 class="mb-1"><a href="<?=$link?>"> <?=$rss_element['title']?> </a></h5><!-- переправлю этот заголовок на ссылку -->
+			<small class="text-muted"> <?=$rss_element['date']?> </small>
+		</div>
+		<p class="mb-1"> <?=$rss_element['description']?> </p>
+		<small class="text-muted"><a href="<?=$link?>"> <?=$link?> </a></small>
+			<label><input type="checkbox" name="interest_element[]" value="<?=$link?>"> Оставить это </label>
+			<!-- а здесь потом можно добавить кнопки "Нежелательные", на основе этой статистики будут формироваться автофильтры -->
+	</li>
+	<?php endforeach; ?>
+</div>
+<button type="submit" name="submit" class="btn btn-primary btn-block">Продолжить</button>
+</form>

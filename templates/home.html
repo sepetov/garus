@@ -1,0 +1,116 @@
+<!-- капитальная переделка будет намного позже -->
+
+<!-- отображение списка существующих категорий с количеством рассылок в каждой и возможностью удаления всей категории -->
+<h3>Существующие категории:</h3>
+<form action="" method="post">
+	<?php foreach ($all_categories as $name_category => $configuration_category): ?>
+	<?php $count_rss_in_category = count($configuration_category['all_channels']); ?>
+	<div class="form-row">
+		<div class="col">
+			<?=$name_category?> (<?=$count_rss_in_category?>)
+		</div>
+		<div class="col">
+			<label class="form-check-label">
+				<input type="checkbox" name="name_delete_category[<?=$name_category?>]" class="form-check-input">Удалить
+			</label>
+		</div>
+	</div>
+	<?php endforeach; ?>
+	<button type="submit" class="btn btn-primary btn-block" <?= $html_attribute_disabled ?>>Обновить</button>
+</form>
+
+<h3>Добавление новой категории:</h3>
+<form class="form-inline" action="" method="post">
+	<!--<div class="form-group mb-2">
+		<label>Создать категорию рассылок:</label>
+	</div>-->
+	<div class="form-group mx-sm-3 mb-2">
+		<input type="text" class="form-control" name="name_created_category" value="" placeholder="Название категории">
+	</div>
+	<button type="submit" class="btn btn-primary mb-2" <?= $html_attribute_disabled ?>>Добавить</button>
+</form>
+
+<h3>Добавление рассылок в категории:</h3>
+<form class="form-inline" action="" method="post">
+	<!--<div class="form-group mb-2">
+		<label>Ссылка на RSs:</label>
+	</div>-->
+	<div class="form-group mx-sm-3 mb-2">
+		<input type="text" class="form-control" name="url_rss" value="" placeholder="Ссылка на RSS">
+	</div>
+	<div class="form-group mx-sm-3 mb-2">
+		<label for="select_category">в категорию: </label>
+		<select class="form-control" id="select_category" name="select_category">
+			<?php foreach ($all_categories as $key => $value) : ?>
+			<option value="<?=$key?>"><?=$key?></option>
+			<?php endforeach; ?>
+		</select>
+	</div>
+	<button type="submit" class="btn btn-primary mb-2" <?= $html_attribute_disabled ?>>Добавить</button>
+</form>
+
+<h3>Удаление рассылок из категории (рабочее, временное):</h3>
+<form action="" method="post">
+	<?php foreach ($all_categories as $name_category => $configuration_category) : ?>
+		<?php $all_channels = $configuration_category['all_channels'] ?>
+		<?php foreach ($all_channels as $url_rss => $name_channel) :?>
+		<div class="form-row">
+			<div class="col">
+				<?=$name_category?> / <?=$name_channel ?>
+			</div>
+			<div class="col">
+				<label class="form-check-label">
+					<input type="checkbox" name="delete_channel[<?=$url_rss?>]" class="form-check-input">Удалить
+				</label>
+			</div>
+		</div>
+		<?php endforeach; ?>
+	<?php endforeach; ?>
+	<button type="submit" class="btn btn-primary mb-2" <?= $html_attribute_disabled ?>>Обновить</button>
+</form>
+
+<hr>
+
+
+<h3>Удаление рассылок из категории (перспективное, в разработке):</h3>
+<form class="form-inline" action="" method="post">
+	<label for="select_category">Из категории:</label>
+	<select class="form-control" id="select_category" name="select_category">
+	<?php foreach ($all_categories as $key => $value) : ?>
+		<option value="<?=$key?>"><?=$key?></option>
+	<?php endforeach; ?>
+	</select>
+	<label for="name_delete_rss">рассылку: </label>
+	<select class="form-control" id="name_delete_rss" name="name_delete_rss">
+	<?php foreach ($all_categories as $key => $value) : ?>
+		<option value="<?=$key?>"><?=$key?></option>
+	<?php endforeach; ?>
+	</select>
+	<button type="submit" class="btn btn-primary mb-2" <?= $html_attribute_disabled ?>>Удалить</button>
+</form>
+
+<h3>Управление пользователями</h3>
+<p>Этот блок должен быть виден только для root!</p>
+<p>Здесь можно, не меняя root-пользователя, насоздавать ему синонимов. Пользователь-синоним может всё то, что может и root, кроме: создания/изменения новых и имеющихся пользователей, удаления/добавления рассылок, очищения истории, очищения логов авторизации.</p>
+
+<form class="" action="" method="post">
+	<label for="alias">Пользователи и пароли (формат указан в примере):</label>
+	<textarea class="form-control" id="alias" rows="10" name="alias_and_passwords" placeholder="пользователь1=пароль1=пользователь2=пароль2"></textarea>
+	<button type="submit" class="btn btn-primary" <?= $html_attribute_disabled ?>>Создать</button>
+</form>
+<p>Удаление пользователей:</p>
+<form action="" method="post">
+	<?php foreach ($all_users as $name_user => $password_user): ?>
+	<div class="form-row">
+		<div class="col">
+			<?=$name_user?>
+		</div>
+		<div class="col">
+			<label class="form-check-label">
+				<input type="checkbox" name="name_delete_user[<?=$name_user?>]" class="form-check-input">Удалить
+			</label>
+		</div>
+	</div>
+	<?php endforeach; ?>
+	<button type="submit" class="btn btn-primary mb-2" <?= $html_attribute_disabled ?>>Обновить</button>
+</form>
